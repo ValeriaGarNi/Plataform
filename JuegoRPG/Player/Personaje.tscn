@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Player/Player.png" type="Texture" id=1]
 [ext_resource path="res://Player/Personaje.gd" type="Script" id=2]
@@ -39,6 +39,126 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 7, 8, 9, 10, 11, 6 ]
+}
+
+[sub_resource type="Animation" id=28]
+resource_name = "AtacarAbajo"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 36, 37, 38, 39 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "ataque_animation_finished"
+} ]
+}
+
+[sub_resource type="Animation" id=29]
+resource_name = "AtacarArriba"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 28, 29, 30, 31 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "ataque_animation_finished"
+} ]
+}
+
+[sub_resource type="Animation" id=27]
+resource_name = "AtacarDerecha"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 24, 25, 26, 27 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "ataque_animation_finished"
+} ]
+}
+
+[sub_resource type="Animation" id=30]
+resource_name = "AtacarIzquierda"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 32, 33, 34, 35 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "ataque_animation_finished"
+} ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -157,6 +277,31 @@ tracks/0/keys = {
 "values": [ 2 ]
 }
 
+[sub_resource type="AnimationNodeAnimation" id=31]
+animation = "AtacarIzquierda"
+
+[sub_resource type="AnimationNodeAnimation" id=32]
+animation = "AtacarAbajo"
+
+[sub_resource type="AnimationNodeAnimation" id=33]
+animation = "AtacarDerecha"
+
+[sub_resource type="AnimationNodeAnimation" id=34]
+animation = "AtacarArriba"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=35]
+blend_point_0/node = SubResource( 31 )
+blend_point_0/pos = Vector2( -1, 0 )
+blend_point_1/node = SubResource( 32 )
+blend_point_1/pos = Vector2( 0, 1.1 )
+blend_point_2/node = SubResource( 33 )
+blend_point_2/pos = Vector2( 1, 0 )
+blend_point_3/node = SubResource( 34 )
+blend_point_3/pos = Vector2( 0, -1.1 )
+min_space = Vector2( -1, -1.1 )
+max_space = Vector2( 1, 1.1 )
+blend_mode = 1
+
 [sub_resource type="AnimationNodeAnimation" id=14]
 animation = "Abajo"
 
@@ -211,13 +356,20 @@ blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=25]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=36]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=37]
+
 [sub_resource type="AnimationNodeStateMachine" id=26]
+states/Atacar/node = SubResource( 35 )
+states/Atacar/position = Vector2( 442, 240.55 )
 states/Correr/node = SubResource( 18 )
 states/Correr/position = Vector2( 677, 126 )
 states/Parar/node = SubResource( 23 )
 states/Parar/position = Vector2( 442, 126 )
-transitions = [ "Parar", "Correr", SubResource( 24 ), "Correr", "Parar", SubResource( 25 ) ]
+transitions = [ "Parar", "Correr", SubResource( 24 ), "Correr", "Parar", SubResource( 25 ), "Atacar", "Parar", SubResource( 36 ), "Parar", "Atacar", SubResource( 37 ) ]
 start_node = "Parar"
+graph_offset = Vector2( 0, 75.5498 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=13]
 
@@ -240,6 +392,10 @@ shape = SubResource( 1 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Abajo = SubResource( 2 )
 anims/Arriba = SubResource( 3 )
+anims/AtacarAbajo = SubResource( 28 )
+anims/AtacarArriba = SubResource( 29 )
+anims/AtacarDerecha = SubResource( 27 )
+anims/AtacarIzquierda = SubResource( 30 )
 anims/Derecha = SubResource( 4 )
 anims/Izquierda = SubResource( 6 )
 "anims/Parar abajo" = SubResource( 9 )
@@ -251,7 +407,7 @@ anims/RESET = SubResource( 7 )
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 26 )
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/playback = SubResource( 13 )
+parameters/Atacar/blend_position = Vector2( 0, 0 )
 parameters/Correr/blend_position = Vector2( 0, 0 )
-parameters/Parar/blend_position = Vector2( -0.00158477, -0.00472105 )
+parameters/Parar/blend_position = Vector2( 0, 0 )
