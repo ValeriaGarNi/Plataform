@@ -11,13 +11,18 @@ enum {
 
 var state = MOVIMIENTO
 var velocidad = Vector2.ZERO
+var roll_vector = Vector2.DOWN
+var stats = StatsPersonaje
 
-onready var animacionJugador = $AnimationPlayer
+#onready var animacionJugador = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
+onready var espadaHitbox = $HitboxPivote/EspadaHitbox
 
 func _ready():
+	stats.connect("no_vida", self, "queue_free")
 	animationTree.active = true
+	espadaHitbox.knockback_vector = roll_vector
 
 func _physics_process(delta):
 	match state:
@@ -35,6 +40,7 @@ func movimiento_state(delta):
 	#print("velocidad")
 	
 	if input_vector != Vector2.ZERO:
+		espadaHitbox.knockback_vector = input_vector
 		animationTree.set("parameters/Parar/blend_position", input_vector)
 		animationTree.set("parameters/Correr/blend_position", input_vector)
 		animationTree.set("parameters/Atacar/blend_position", input_vector)
@@ -56,3 +62,7 @@ func ataque_state(delta):
 
 func ataque_animation_finished():
 	state = MOVIMIENTO
+
+
+func _on_Hurtbox_area_entered(area):
+	stats.vida -= 1
