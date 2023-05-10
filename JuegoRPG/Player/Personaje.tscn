@@ -1,8 +1,10 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://Player/Player.png" type="Texture" id=1]
 [ext_resource path="res://Player/Personaje.gd" type="Script" id=2]
 [ext_resource path="res://Overlap/Hitbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Player/EspadaHitbox.gd" type="Script" id=4]
+[ext_resource path="res://Overlap/Hurtbox.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
@@ -84,7 +86,7 @@ tracks/2/keys = {
 "values": [ 90.0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("HitboxPivote/Hitbox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("HitboxPivote/EspadaHitbox/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -138,7 +140,7 @@ tracks/2/keys = {
 "values": [ 270.0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("HitboxPivote/Hitbox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("HitboxPivote/EspadaHitbox/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -192,7 +194,7 @@ tracks/2/keys = {
 "values": [ 0.0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("HitboxPivote/Hitbox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("HitboxPivote/EspadaHitbox/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -246,7 +248,7 @@ tracks/2/keys = {
 "values": [ 180.0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("HitboxPivote/Hitbox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("HitboxPivote/EspadaHitbox/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -386,7 +388,7 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("HitboxPivote/Hitbox/CollisionShape2D:disabled")
+tracks/2/path = NodePath("HitboxPivote/EspadaHitbox/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -494,6 +496,10 @@ graph_offset = Vector2( 0, 75.5498 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=13]
 
+[sub_resource type="CapsuleShape2D" id=38]
+radius = 5.0
+height = 8.0
+
 [node name="Personaje" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
@@ -537,8 +543,19 @@ parameters/Parar/blend_position = Vector2( 0, 0 )
 [node name="HitboxPivote" type="Position2D" parent="."]
 position = Vector2( 0, -4 )
 
-[node name="Hitbox" parent="HitboxPivote" instance=ExtResource( 3 )]
+[node name="EspadaHitbox" parent="HitboxPivote" instance=ExtResource( 3 )]
 position = Vector2( 15, 0 )
 collision_mask = 8
+script = ExtResource( 4 )
 
-[editable path="HitboxPivote/Hitbox"]
+[node name="Hurtbox" parent="." instance=ExtResource( 5 )]
+collision_layer = 4
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2( 0, -4 )
+shape = SubResource( 38 )
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+
+[editable path="HitboxPivote/EspadaHitbox"]
+[editable path="Hurtbox"]

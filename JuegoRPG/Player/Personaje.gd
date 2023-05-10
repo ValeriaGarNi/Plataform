@@ -11,18 +11,19 @@ enum {
 
 var state = MOVIMIENTO
 var velocidad = Vector2.ZERO
-var roll_vector = Vector2.DOWN
-var stats = StatsPersonaje
+var one_vector = Vector2.LEFT
+var stats = PersonajeStats
 
 #onready var animacionJugador = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
 onready var espadaHitbox = $HitboxPivote/EspadaHitbox
+onready var hurtbox = $Hurtbox
 
 func _ready():
 	stats.connect("no_vida", self, "queue_free")
 	animationTree.active = true
-	espadaHitbox.knockback_vector = roll_vector
+	
 
 func _physics_process(delta):
 	match state:
@@ -40,6 +41,7 @@ func movimiento_state(delta):
 	#print("velocidad")
 	
 	if input_vector != Vector2.ZERO:
+		one_vector = input_vector
 		espadaHitbox.knockback_vector = input_vector
 		animationTree.set("parameters/Parar/blend_position", input_vector)
 		animationTree.set("parameters/Correr/blend_position", input_vector)
@@ -66,3 +68,5 @@ func ataque_animation_finished():
 
 func _on_Hurtbox_area_entered(area):
 	stats.vida -= 1
+	hurtbox.start_invincibility(0.5)
+	hurtbox.create_hit_effect()
